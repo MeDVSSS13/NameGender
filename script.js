@@ -24,8 +24,14 @@ const resetZoom = () => {
 	document.body.style.zoom = 1;
 };
 
+const resetViewportScale = () => {
+	const viewportMetaTag = document.querySelector('meta[name="viewport"]');
+	viewportMetaTag.content =
+		"width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0";
+};
 const onClick = () => {
 	getNameGender();
+	resetViewportScale();
 };
 
 const applyStyles = (gender, probability) => {
