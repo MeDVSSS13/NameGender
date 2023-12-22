@@ -8,11 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <div class="content-box"><h1>What's your Name?</h1>
-            <input type="name" id="name">
-            <button type="submit" onclick="onClick()">Submit</button>
+        <div class="content-box">
+            <h1>What's your Name?</h1>
+            <label for="name">Enter your name:</label>
+            <input type="text" id="name">
+            <button type="button" onclick="onClick()">Check</button>
             <div class="gender"></div>
-            <div class="probability"></div>
+            <div class="probability">
+                <p id="maleProb">Male Probability: 50%</p>
+                <p id="femaleProb">Female Probability: 50%</p>
+            </div>
+        </div>
     </div>
     
     <script src="script.js"></script>

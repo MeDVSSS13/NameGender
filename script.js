@@ -1,15 +1,20 @@
-`use strict`;
+"use strict";
 
 const getNameGender = async () => {
 	try {
-		let name = document.getElementById(`name`).value;
+		let name = document.getElementById("name").value;
 		let response = await fetch(`https://api.genderize.io?name=${name}`);
 		let data = await response.json();
+
+		if (!response.ok) {
+			throw new Error("Failed to retrieve data. Please try again.");
+		}
+
 		console.log(data);
-		genderDisplay(data.gender);
-		probabilityDisplay(data.probability);
+		applyStyles(data.gender, data.probability);
+		probabilityDisplay(data.probability, data.gender);
 	} catch (err) {
-		console.log(err);
+		console.error("An error occurred:", err.message);
 	}
 };
 
@@ -17,20 +22,43 @@ const onClick = () => {
 	getNameGender();
 };
 
-const genderDisplay = (gender) => {
-	let genderImage = document.querySelector(`.gender`);
-	let maleUrl =
-		"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Mars-male-symbol-pseudo-3D-blue.svg/1200px-Mars-male-symbol-pseudo-3D-blue.svg.png";
-	let femaleUrl = `https://img.freepik.com/free-psd/female-symbol-transparent-background-pink-female-symbol-png-download_56104-2302.jpg`;
+const applyStyles = (gender, probability) => {
+	let container = document.querySelector(".container");
 
-	if (gender === `male`) {
-		genderImage.style.backgroundImage = `url(${maleUrl})`;
-	} else {
-		genderImage.style.backgroundImage = `url(${femaleUrl})`;
+	// Reset styles
+	container.classList.remove(
+		"male-high-probability",
+		"male-low-probability",
+		"female-high-probability",
+		"female-low-probability",
+		"neutral-style"
+	);
+
+	if (probability === 0.5) {
+		container.classList.add("neutral-style");
+	} else if (gender === "male" && probability >= 0.7) {
+		container.classList.add("male-high-probability");
+	} else if (gender === "male" && probability < 0.7) {
+		container.classList.add("male-low-probability");
+	} else if (gender === "female" && probability >= 0.7) {
+		container.classList.add("female-high-probability");
+	} else if (gender === "female" && probability < 0.7) {
+		container.classList.add("female-low-probability");
 	}
 };
 
-const probabilityDisplay = (percent) => {
-	let percentage = document.querySelector(`.probability`);
-	percentage.innerText = `${percent * 100}%`;
+const probabilityDisplay = (percent, gender) => {
+	let maleProb = document.getElementById(`maleProb`);
+	let femaleProb = document.getElementById(`femaleProb`);
+	if (gender === "male") {
+		maleProb.textContent = `Probably male: ${percent * 100}%`;
+		femaleProb.textContent = `Probably female: ${Math.round(
+			(1 - percent) * 100
+		)}%`;
+	} else {
+		femaleProb.textContent = `Probably male: ${percent * 100}%`;
+		maleProb.textContent = `Probably female: ${Math.round(
+			(1 - percent) * 100
+		)}%`;
+	}
 };
