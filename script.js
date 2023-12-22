@@ -20,8 +20,7 @@ const getNameGender = async () => {
 	}
 };
 const resetZoom = () => {
-	// Установить масштаб обратно на 1
-	document.body.style.zoom = 1;
+	window.scrollTo(0, 0);
 };
 
 const onClick = () => {
