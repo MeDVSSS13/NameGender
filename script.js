@@ -21,6 +21,7 @@ const getNameGender = async () => {
 };
 const resetZoom = () => {
 	window.scrollTo(0, 0);
+	document.body.style.zoom = 1;
 };
 
 const onClick = () => {
