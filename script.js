@@ -13,15 +13,9 @@ const getNameGender = async () => {
 		console.log(data);
 		applyStyles(data.gender, data.probability);
 		probabilityDisplay(data.probability, data.gender);
-
-		resetZoom();
 	} catch (err) {
 		console.error("An error occurred:", err.message);
 	}
-};
-const resetZoom = () => {
-	window.scrollTo(0, 0);
-	document.body.style.zoom = 1;
 };
 
 const resetViewportScale = () => {
