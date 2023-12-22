@@ -14,10 +14,14 @@ const getNameGender = async () => {
 		applyStyles(data.gender, data.probability);
 		probabilityDisplay(data.probability, data.gender);
 
-		document.getElementById("name").blur();
+		resetZoom();
 	} catch (err) {
 		console.error("An error occurred:", err.message);
 	}
+};
+const resetZoom = () => {
+	// Установить масштаб обратно на 1
+	document.body.style.zoom = 1;
 };
 
 const onClick = () => {
