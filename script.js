@@ -13,6 +13,8 @@ const getNameGender = async () => {
 		console.log(data);
 		applyStyles(data.gender, data.probability);
 		probabilityDisplay(data.probability, data.gender);
+
+		document.getElementById("name").blur();
 	} catch (err) {
 		console.error("An error occurred:", err.message);
 	}
@@ -55,10 +57,8 @@ const probabilityDisplay = (percent, gender) => {
 		femaleProb.textContent = `Probably female: ${Math.round(
 			(1 - percent) * 100
 		)}%`;
-	} else {
-		femaleProb.textContent = `Probably male: ${percent * 100}%`;
-		maleProb.textContent = `Probably female: ${Math.round(
-			(1 - percent) * 100
-		)}%`;
+	} else if (gender === `female`) {
+		femaleProb.textContent = `Probably female: ${percent * 100}%`;
+		maleProb.textContent = `Probably male: ${Math.round((1 - percent) * 100)}%`;
 	}
 };
